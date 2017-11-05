@@ -81,3 +81,23 @@ confidence_high = df1*1.05
 confidence_low = df1*0.95
 plt.show()
 
+
+# In[ ]:
+
+def onclick(event):
+    plt.cla()
+    bars=plt.bar(range(len(df.index)),df1,yerr=confidence_level,capsize=10,width=0.95,align='center',color='b',edgecolor='black')
+    plt.axhline(y=event.ydata, color='c')
+    for i in range(len(df1.index)):
+        if (event.ydata) < (confidence_low.iloc[i]):
+            bars[i].set_color('r') 
+        elif (event.ydata) < (confidence_high.iloc[i]):
+            bars[i].set_color('w')
+        else:
+            bars[i].set_color('b')
+    
+plt.gcf().canvas.mpl_connect('button_press_event', onclick)
+
+
+plt.show()
+
