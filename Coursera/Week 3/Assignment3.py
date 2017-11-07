@@ -88,6 +88,7 @@ def onclick(event):
     plt.cla()
     bars=plt.bar(range(len(df.index)),df1,yerr=confidence_level,capsize=10,width=0.95,align='center',color='b',edgecolor='black')
     plt.axhline(y=event.ydata, color='m')
+    plt.xticks(np.arange(6))
     for i in range(len(df1.index)):
         if (event.ydata) < (confidence_low.iloc[i]):
             bars[i].set_color('r') 
