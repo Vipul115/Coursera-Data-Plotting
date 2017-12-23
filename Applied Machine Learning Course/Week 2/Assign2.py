@@ -225,7 +225,7 @@ answer_four()
 # 
 # The data in the mushrooms dataset is currently encoded with strings. These values will need to be encoded to numeric to work with sklearn. We'll use pd.get_dummies to convert the categorical variables into indicator variables. 
 
-# In[ ]:
+# In[22]:
 
 import pandas as pd
 import numpy as np
@@ -237,6 +237,9 @@ mush_df2 = pd.get_dummies(mush_df)
 
 X_mush = mush_df2.iloc[:,2:]
 y_mush = mush_df2.iloc[:,1]
+
+
+# In[23]:
 
 # use the variables X_train2, y_train2 for Question 5
 X_train2, X_test2, y_train2, y_test2 = train_test_split(X_mush, y_mush, random_state=0)
@@ -250,6 +253,11 @@ X_subset = X_test2
 y_subset = y_test2
 
 
+# In[41]:
+
+get_ipython().magic('pinfo sorted')
+
+
 # ### Question 5
 # 
 # Using `X_train2` and `y_train2` from the preceeding cell, train a DecisionTreeClassifier with default parameters and random_state=0. What are the 5 most important features found by the decision tree?
@@ -259,14 +267,20 @@ y_subset = y_test2
 # *This function should return a list of length 5 containing the feature names in descending order of importance.*
 # 
 
-# In[ ]:
+# In[45]:
 
 def answer_five():
     from sklearn.tree import DecisionTreeClassifier
-
-    # Your code here
-
-    return # Your answer here
+    from adspy_shared_utilities import plot_decision_tree
+    
+    dtc= DecisionTreeClassifier(random_state=0).fit(X_train2,y_train2)
+    Series = pd.Series(data = dtc.feature_importances_, index = X_train2.columns.values)
+    topfive = Series.sort_values(axis=0, ascending=False).index.tolist()
+    ans = topfive[:5]
+    
+    return ans
+    
+answer_five()
 
 
 # ### Question 6
